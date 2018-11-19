@@ -20,7 +20,8 @@ public class EchoClient {
     }
 
     public static void main(String[] args) throws Exception{
-        new EchoClient("",7000).start();
+        System.out.println("启动客户端");
+        new EchoClient("127.0.0.1",7000).start();
     }
 
     private void start()throws Exception{
@@ -35,7 +36,7 @@ public class EchoClient {
                             ch.pipeline().addLast(new EchoClientHandler());
                         }
                     });
-            ChannelFuture channelFuture = bootstrap.bind().sync();
+            ChannelFuture channelFuture = bootstrap.connect().sync();
             channelFuture.channel().closeFuture().sync();
         }finally {
             loopGroup.shutdownGracefully().sync();
